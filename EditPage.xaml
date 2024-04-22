@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CollectionManager.EditPage"
+             Title="Edytuj Element">
+
+    <Shell.TitleView>
+        <Grid BackgroundColor="#3D5073">
+            <Label x:Name="TitleLabel" VerticalOptions="Center" FontSize="20" TextColor="White"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <ContentPage.Resources>
+        <Color x:Key="PrimaryColor">#7086B3</Color>
+        <Color x:Key="PrimaryColorDark">#3D5073</Color>
+        <Color x:Key="SecondaryColor">#6D7689</Color>
+        <Color x:Key="AccentColor">#668CDE</Color>
+        <Color x:Key="TextColor">#FFFFFF</Color>
+        <Color x:Key="BackgroundColor">#1D2433</Color>
+        <Color x:Key="DeleteButtonHoverColor">#FF0000</Color>
+
+        <Style TargetType="Button" x:Key="PrimaryButtonStyle">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="DeleteButtonStyle">
+            <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}" />
+            <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+            <!-- zmiana na biały tekst -->
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="{StaticResource DeleteButtonHoverColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Background>
+        <SolidColorBrush Color="{StaticResource BackgroundColor}" />
+    </ContentPage.Background>
+
+    <StackLayout Margin="10">
+        <CollectionView x:Name="ElementCollectionView" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid BackgroundColor="{StaticResource PrimaryColorDark}" VerticalOptions="CenterAndExpand" Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" TextColor="{StaticResource TextColor}" />
+                        <Label Grid.Column="1" Text="{Binding Price}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" TextColor="{StaticResource TextColor}" />
+                        <Label Grid.Column="2" Text="{Binding Status}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" TextColor="{StaticResource TextColor}" />
+                        <Label Grid.Column="3" Text="{Binding Rate, StringFormat='{0}/10'}" VerticalOptions="Center" TextColor="{StaticResource TextColor}" />
+                        <Label Grid.Column="4" Text="{Binding Comment}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" TextColor="{StaticResource TextColor}" />
+                        <Button Grid.Column="5" Text="Edytuj" Clicked="EditElement_Clicked" CommandParameter="{Binding .}" Style="{StaticResource PrimaryButtonStyle}" />
+                        <Button Grid.Column="6" Text="Usuń" Clicked="RemoveElement_Clicked" CommandParameter="{Binding .}" Style="{StaticResource DeleteButtonStyle}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Entry x:Name="NewElementEntry" Placeholder="Nazwa" TextColor="White" BackgroundColor="{StaticResource AccentColor}"/>
+        <Entry x:Name="PriceEntry" Placeholder="Cena"  TextColor="White"  BackgroundColor="{StaticResource AccentColor}"/>
+
+        <Label Text="Status:"  TextColor="White"/>
+        <Picker x:Name="StatusPicker" BackgroundColor="{StaticResource AccentColor}">
+            <Picker.Items>
+                <x:String>Nowy</x:String>
+                <x:String>Użyty</x:String>
+                <x:String>Na sprzedaż</x:String>
+                <x:String>Sprzedany</x:String>
+                <x:String>Chcę kupić</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <Label Text="Ocena:"  TextColor="White"/>
+        <Slider x:Name="RatingSlider" Maximum="10" Minimum="1" />
+        <Editor x:Name="CommentEditor" Placeholder="Komentarz" TextColor="White"  BackgroundColor="{StaticResource AccentColor}"/>
+        <Button Text="Dodaj" Clicked="AddElement_Clicked" Style="{StaticResource PrimaryButtonStyle}" HorizontalOptions="Center" />
+    </StackLayout>
+</ContentPage>

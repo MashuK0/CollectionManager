@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CollectionManager.CollectionPage"
+             Title="CollectionPage">
+
+    <Shell.TitleView>
+        <Grid BackgroundColor="#3D5073">
+            <Label x:Name="TitleLabel" VerticalOptions="Center" FontSize="20" TextColor="White"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <ContentPage.Resources>
+        <Color x:Key="PrimaryColor">#7086B3</Color>
+        <Color x:Key="PrimaryColorDark">#3D5073</Color>
+        <Color x:Key="AccentColor">#668CDE</Color>
+        <Color x:Key="TextColor">#FFFFFF</Color>
+        <Color x:Key="BackgroundColor">#1D2433</Color>
+
+        <Style TargetType="Label" x:Key="TitleLabelStyle">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Background>
+        <SolidColorBrush Color="{StaticResource BackgroundColor}" />
+    </ContentPage.Background>
+
+    <StackLayout>
+        <CollectionView x:Name="ElementCollectionView" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5" BackgroundColor="{StaticResource PrimaryColorDark}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" />
+                        <Label Grid.Column="1" Text="{Binding Price}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" />
+                        <Label Grid.Column="2" Text="{Binding Status}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" />
+                        <Label Grid.Column="3" Text="{Binding Rate, StringFormat='{0}/10'}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand"/>
+                        <Label Grid.Column="4" Text="{Binding Comment}" Style="{StaticResource TitleLabelStyle}" VerticalOptions="CenterAndExpand" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
